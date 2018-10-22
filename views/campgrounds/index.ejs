@@ -1,0 +1,36 @@
+<% include ../partials/header %>
+
+<div class="container maincontent">
+    <header class='jumbotron'>
+        <div class="container maincontent">
+            <h1><i class="fas fa-compass"></i> Welcome To YelpCamp!</h1>
+            <p>View our hand-picked campground from Republic of Bashkortostan <i class="far fa-grin-wink"></i></p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add a New Campground</a>
+            </p>
+        </div>
+    </header>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Our Most Popular Campgrounds! <i class="fas fa-magic"></i></h3>
+        </div>
+    </div>
+    
+    <div class="form-row text-center" style="display:flex; flex-wrap: wrap;">
+        <% campgrounds.forEach(function(campground){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="card">
+                    <div class="caption">
+                        <img class="img-fluid rounded" alt="Responsive image" src="<%= campground.image %>">
+                    </div>
+                    <h4><%= campground.name %></h4>
+                    <p>
+                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More info</a>
+                    </p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+<% include ../partials/footer %>
