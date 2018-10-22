@@ -3,17 +3,17 @@
 <div class="container maincontent">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">YelpCamp information</p>
+            <p class="lead font-italic">YelpCamp information</p>
             <div class="list-group">
-                <a tabindex="0" class="btn btn-lg btn-light border border-dark" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" title="About campgrounds" data-content="Good place at all around the world to your camping">About campgrounds</a>
-                <a tabindex="0" class="btn btn-lg btn-light border border-dark" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" title="About comments" data-content="You can add a comments a ask a question from author">About comments</a>
-                <a tabindex="0" class="btn btn-lg btn-light border border-dark" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" title="About prices" data-content="Prices can be different. Be careful or ask somebody in comments.">About prices</a>
+                <a tabindex="0" class="btn btn-lg btn-light border border-dark font-italic" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" title="About campgrounds" data-content="Good place at all around the world to your camping">About campgrounds</a>
+                <a tabindex="0" class="btn btn-lg btn-light border border-dark font-italic" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" title="About comments" data-content="You can add a comments a ask a question from author">About comments</a>
+                <a tabindex="0" class="btn btn-lg btn-light border border-dark font-italic" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" title="About prices" data-content="Prices can be different. Be careful or ask somebody in comments.">About prices</a>
             </div>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
                 <img class="img-fluid" src="<%= campground.image %>">
-                <div class="caption-full">
+                <div class="caption-full bg-light">
                     <h4 class="float-right"><i class="fas fa-coins"></i> $<%= campground.price %>/night</h4>
                     <h4><a><i class="fas fa-campground"></i> <%=campground.name%></a></h4>
                     <p><%= campground.description %></p>
@@ -28,29 +28,32 @@
                     <% } %>
                 </div>
             </div>
-            <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment <i class="far fa-comments"></i></a>
+            <div class="well bg-white">
+                <div class="container">
+                    <div class="text-right">
+                        <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment <i class="far fa-comments"></i></a>
+                    </div>
+                    <hr>
+                    <% campground.comments.forEach(function(comment){ %>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong><i class="fas fa-child"></i><%= comment.author.username %></strong>
+                                <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+                                <p>
+                                    <%= comment.text %> 
+                                </p>
+                                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                    <a class="btn btn-xs btn-warning" 
+                                       href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                                    <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id%>?_method=DELETE" method="POST">
+                                        <button class="btn btn-xs btn-danger">Delete</button>
+                                    </form>
+                                    <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
                 </div>
                 <hr>
-                <% campground.comments.forEach(function(comment){ %>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <strong><i class="fas fa-child"></i><%= comment.author.username %></strong>
-                            <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
-                            <p>
-                                <%= comment.text %> 
-                            </p>
-                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                                <a class="btn btn-xs btn-warning" 
-                                   href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
-                                <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id%>?_method=DELETE" method="POST">
-                                    <button class="btn btn-xs btn-danger">Delete</button>
-                                </form>
-                                <% } %>
-                        </div>
-                    </div>
-                <% }) %>
             </div>
         </div>
     </div>

@@ -53,7 +53,6 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, 
             res.render("comments/edit", {campground_id: req.params.id, comment: foundComment});
         }
     });
-    
 });
 
 // COMMENTS UPDATE ROUTE
